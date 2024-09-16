@@ -1,0 +1,43 @@
+{
+    "cart": [
+      {
+        "id": 1,
+        "title": "Leather Jacket",
+        "img": "/images/leather-jacket.jpg",
+        "description": "Classic leather jacket for a timeless look",
+        "price": 199.99,
+        "category": "Outerwear",
+        "details": {
+          "material": "Genuine leather",
+          "sizes": ["S", "M", "L", "XL"],
+          "colors": ["Black", "Brown"]
+        }
+      },
+      {
+        "id": 2,
+        "title": "Denim Jeans",
+        "img": "/images/denim-jeans.jpg",
+        "description": "Comfortable and stylish denim jeans",
+        "price": 59.99,
+        "category": "Pants",
+        "details": {
+          "material": "100% cotton denim",
+          "sizes": ["28", "30", "32", "34", "36"],
+          "colors": ["Blue", "Black"]
+        }
+      },
+      {
+        "id": 3,
+        "title": "Cotton T-Shirt",
+        "img": "/images/cotton-tshirt.jpg",
+        "description": "Soft and breathable cotton t-shirt",
+        "price": 24.99,
+        "category": "Tops",
+        "details": {
+          "material": "100% organic cotton",
+          "sizes": ["XS", "S", "M", "L", "XL"],
+          "colors": ["White", "Gray", "Navy"]
+        }
+      }
+    ]
+  }
