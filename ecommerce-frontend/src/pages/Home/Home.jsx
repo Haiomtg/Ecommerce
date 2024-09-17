@@ -1,6 +1,5 @@
 import React from 'react'
-import { bannerOne, bannerTwo } from '../../assets'
-import ProductCard from '../ProductCard/ProductCard'
+import {  bannerTwo } from '../../assets'
 import ProductList from '../ProductList/ProductList'
 
 export default function Home() {

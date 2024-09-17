@@ -37,3 +37,13 @@ CREATE TABLE cart (
     quantity INT,
     FOREIGN KEY (product_id) REFERENCES product_list(id)
 );
+
+
+-- Step 1: Drop the foreign key constraint
+ALTER TABLE cart DROP FOREIGN KEY cart_ibfk_1;
+
+-- Step 2: Modify the id column in product_list
+ALTER TABLE product_list MODIFY id INT AUTO_INCREMENT;
+
+-- Step 3: Re-add the foreign key constraint
+ALTER TABLE cart ADD CONSTRAINT cart_ibfk_1 FOREIGN KEY (product_id) REFERENCES product_list(id);

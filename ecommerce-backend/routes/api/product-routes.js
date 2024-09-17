@@ -29,11 +29,20 @@ function createRouter(connection) {
 
     router.post('/add', async (req, res) => {
         try {
-            const { title, img, description, price, category, detail } = req.body;
-            const sql = 'INSERT INTO product_list (title, img, description, price, category, detail) VALUES (?, ?, ?, ?, ?, ?)';
-            const result = await connection.query(sql, [title, img, description, price, category, detail]);
-            res.status(201).json({ id: result.insertId, title, img, description, price, category, detail });
+            const { title, img, description, price, category, details } = req.body;
+
+            // Validate required fields
+            if (!title || !img || !description || !price || !category || !details) {
+                return res.status(400).json({ error: 'All fields are required' });
+            }
+
+            const sql = `INSERT INTO product_list (title, img, description, price, category, details) VALUES (?, ?, ?, ?, ?, ?)`;
+            const values = [title, img, description, price, category, JSON.stringify(details)];
+
+            const result = await connection.query(sql, values);
+            res.status(201).json({ id: result.insertId, title, img, description, price, category, details });
         } catch (error) {
+            console.error(error); // Log the error for debugging
             res.status(500).json({ error: error.message });
         }
     });
@@ -41,7 +50,7 @@ function createRouter(connection) {
     router.put('/update/:id', async (req, res) => {
         try {
             const { title, img, description, price, category, detail } = req.body;
-            const sql = 'UPDATE product_list SET title = ?, img = ?, description = ?, price = ?, category = ?, detail = ? WHERE id = ?';
+            const sql = 'UPDATE product_list SET title = ?, img = ?, description = ?, price = ?, category = ?, details = ? WHERE id = ?';
             const result = await connection.query(sql, [title, img, description, price, category, detail, req.params.id]);
             if (result.affectedRows === 0) {
                 res.status(404).json({ message: 'Product not found' });
