@@ -6,7 +6,7 @@ function createRouter(connection) {
     router.get('/all', async (req, res, next) => {
         try {
             const sql = 'SELECT * FROM product_list;';
-            const results = await connection.query(sql);
+            const [results] = await connection.query(sql);
             res.json(results);
         } catch (error) {
             res.status(500).json({ error: error.message });
