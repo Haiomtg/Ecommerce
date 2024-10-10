@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
-import { addToCart as apiAddToCart, removeCartItem as apiRemoveCartItem, clearCart as apiClearCart, getAllCartItems as apiGetAllCartItems } from '../services/cart-api'; // Import API functions
+import { addToCart as apiAddToCart, removeCartItem as apiRemoveCartItem, clearCart as apiClearCart, getAllCartItems as apiGetAllCartItems, updateCartItem as apiUpdateCartItem, checkout as apiCheckout } from '../services/cart-api'; // Import API functions
 
 export const CartContext = createContext();
 
@@ -74,6 +74,30 @@ export const CartProvider = ({ children }) => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
+  const updateItemQuantity = async (id, quantity) => {
+    try {
+      await apiUpdateCartItem(id, quantity); // Call the API to update item quantity
+      setCartItems((prevItems) =>
+        prevItems.map((item) =>
+          item.id === id ? { ...item, quantity } : item
+        )
+      );
+    } catch (error) {
+      console.error('Error updating item quantity:', error);
+    }
+  };
+
+  const checkoutCart = async (paymentMethod) => {
+    try {
+      const response = await apiCheckout(paymentMethod); // Call the API to checkout
+      if (response) {
+        clearCart(); // Clear the cart after successful checkout
+      }
+    } catch (error) {
+      console.error('Error checking out:', error);
+    }
+  };
+
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -86,6 +110,8 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         clearCart,
         getCartTotal,
+        updateItemQuantity, // Add this line
+        checkoutCart,
       }}
     >
       {children}

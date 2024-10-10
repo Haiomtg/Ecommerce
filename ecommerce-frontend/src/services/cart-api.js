@@ -45,10 +45,22 @@ async function clearCart() {
     return await response.json();
 }
 
+// Function to checkout
+async function checkout(paymentMethod) {
+    const response = await fetch(`${API_BASE_URL}/checkout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ paymentMethod }),
+    });
+    if (!response.ok) throw new Error('Failed to checkout');
+    return await response.json();
+}
+
 module.exports = {
     getAllCartItems,
     addToCart,
-    updateCartItem,
+    updateCartItem, // Ensure this is included
     removeCartItem,
     clearCart,
+    checkout,
 };

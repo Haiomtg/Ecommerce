@@ -110,6 +110,19 @@ function createCartRouter(connection) {
         }
     });
 
+    // New route to checkout
+    router.post('/checkout', async (req, res) => {
+        try {
+            const { paymentMethod } = req.body;
+            const sql = 'INSERT INTO orders (payment_method) VALUES (?)';
+            await connection.query(sql, [paymentMethod]);
+            res.json({ message: 'Checkout successful' });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    });
+
+
     return router;
 }
 
